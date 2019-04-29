@@ -30,7 +30,7 @@ To extract the data for an array of transects centred at lat/lon = 56.559, -76.4
 
     python Umi_profiles.py --raster "/path/to/MNT_solnu_3cm_SUD.tif" --lon -76.481 --lat 56.559 --azi 45 --length 100 --width 4 --number 8 --samp 0.1 --epsg 32189 --out "/save/folder"
 
-**Umi_profiles.py**
+**Plot_umi.py**
 This script plots the saved transect data output from the `Umi_profiles` script. 
 The script needs the following inputs:
  - ***--infold***: the path to the folder containing the saved files from the `Umi_profiles`  script, i.e. the extracted transect data from the MNS and MNT solnu and neige.
