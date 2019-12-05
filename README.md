@@ -5,6 +5,7 @@ Development and testing: Maxim Lamare (IGE).
 # Content
 1. [Python scripts](#python)
 2. [Batch processing](#bash)
+3. [Processing tools](#tools)
 
 <a name="python"></a>
 # Python scripts
@@ -81,3 +82,9 @@ The scripts needs the following obligatory inputs:
 Example run:
 
     ./umi_batch_plot.sh -f /path/to/folder/containing/azi_runs -m /path/to/MNS_solnu_3cm_SUD.tif -e 2951 -o /path/to/output/folder -t "Transect_buisson_long"
+
+<a name="tools"></a>
+# Processing tools
+
+**Filter_vegetation.py**
+Filters the vegetation height raster by selecting pixels between the 90th and 98th percentiles. The script returns the filtered raster at the original resolution and the resampled raster (average of the filtered pixels) at the resolution set by the processing window size.
