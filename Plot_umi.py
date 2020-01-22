@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Umiujaq plotting script
+Umiujaq plotting script.
+
+Based on the output of the Profile extraction code, plot the transects.
 """
 import sys
 from argparse import ArgumentParser
@@ -19,8 +21,8 @@ import cartopy.crs as ccrs
 from geo_functs import open_large_raster
 
 
-def main(infold, MNS_path, epsg_code, outfile, titre):
-
+def main(infold, mns_path, epsg_code, outfile, titre):
+    """Main plotting function."""
     files = {}
     for file in infold.iterdir():
         files.update({file.name: file})
@@ -31,7 +33,7 @@ def main(infold, MNS_path, epsg_code, outfile, titre):
     azi = list(files.keys())[0].split("_")[-5]
 
     # Open gdal raster
-    MNS_data, MNS_gt, MNS_ds = open_large_raster(str(MNS_path))
+    MNS_data, MNS_gt, MNS_ds = open_large_raster(str(mns_path))
 
     # Open transect
     data_tr = {}
@@ -66,7 +68,7 @@ def main(infold, MNS_path, epsg_code, outfile, titre):
     ax3 = plt.subplot(gs[:, -1])
 
     # AX
-    MNS_masked = np.ma.masked_where(MNS_data < 0, MNS_data)
+    mns_masked = np.ma.masked_where(MNS_data < 0, MNS_data)
     extent = (
         MNS_gt[0],
         MNS_gt[0] + MNS_ds.RasterXSize * MNS_gt[1],
@@ -74,8 +76,8 @@ def main(infold, MNS_path, epsg_code, outfile, titre):
         MNS_gt[3],
     )
 
-    img = ax.imshow(
-        MNS_masked, extent=extent, origin="upper", cmap="gist_earth"
+    ax.imshow(
+        mns_masked, extent=extent, origin="upper", cmap="gist_earth"
     )
 
     ax.plot(
@@ -86,16 +88,16 @@ def main(infold, MNS_path, epsg_code, outfile, titre):
         linewidth=1,
     )
 
-    norm = Normalize(vmin=np.min(MNS_masked), vmax=np.max(MNS_masked))
+    norm = Normalize(vmin=np.min(mns_masked), vmax=np.max(mns_masked))
     cbar = ColorbarBase(
-        ax1, cmap="gist_earth", norm=norm, orientation="vertical"
+        ax1, cmap=plt.get_cmap("gist_earth"), norm=norm, orientation="vertical"
     )
     cbar.ax.yaxis.set_label_position("left")
     cbar.ax.set_ylabel("Altitude / m")
 
     # AX2
-    img2 = ax2.imshow(
-        MNS_masked, extent=extent, origin="upper", cmap="gist_earth"
+    ax2.imshow(
+        mns_masked, extent=extent, origin="upper", cmap="gist_earth"
     )
 
     for line in transects:
