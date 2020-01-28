@@ -88,3 +88,6 @@ Example run:
 
 **Filter_vegetation.py**
 Filters the vegetation height raster by selecting pixels between the 90th and 98th percentiles. The script returns the filtered raster at the original resolution and the resampled raster (average of the filtered pixels) at the resolution set by the processing window size.
+
+**Calculate_TPI.py**
+Calculates the TPI for a raster, given a window size (in pixels). The pixel size of the window has to be at least 3px, and an odd number.
