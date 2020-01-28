@@ -17,6 +17,7 @@ def open_large_raster(inpath):
     Not necessaraly faster, but avoids reading full raster to memory.
     """
     ds = gdal.Open(str(inpath))
+    prj = ds.GetProjection()
     gt = ds.GetGeoTransform()
     band = ds.GetRasterBand(1)
 
@@ -147,7 +148,7 @@ def open_large_raster(inpath):
 
     band = None
 
-    return array, gt, ds
+    return array, gt, ds, prj
 
 
 def array_to_raster(array, prj, gt, dst_filename):
