@@ -191,10 +191,10 @@ def blockshaped(arr, nrows, ncols):
 
 
 def unblockshaped(arr, h, w):
-    """
+    """Unblockshape.
+
     Return an array of shape (h, w) where
     h * w = arr.size
-
     If arr is of shape (n, nrows, ncols), n sublocks of shape (nrows, ncols),
     then the returned array preserves the "physical" layout of the sublocks.
     """
@@ -202,3 +202,8 @@ def unblockshaped(arr, h, w):
     return (arr.reshape(h//nrows, -1, nrows, ncols)
                .swapaxes(1, 2)
                .reshape(h, w))
+
+
+def rmse(predictions, targets):
+    """Calculate RMSE."""
+    return np.sqrt(((predictions - targets) ** 2).mean())
