@@ -15,7 +15,7 @@ from matplotlib.ticker import MultipleLocator
 from proc_toolbox import (open_large_raster, rmse)
 
 
-def plotting(data, res, output):
+def plotting(data, res, output, site):
     """Plot function for large datasets."""
     # Create figure
     fig = plt.figure(figsize=(7, 2.21), dpi=300,)
@@ -128,8 +128,8 @@ def plotting(data, res, output):
     plt.gcf().canvas.draw()
     for ax in [ax1, ax2, ax3]:
         # Limits
-        ax.set_ylim(0, 2.5)
-        ax.set_xlim(0, 2.5)
+        ax.set_ylim(0, 3)
+        ax.set_xlim(0, 3)
 
         # Ticks
         ax.xaxis.set_major_locator(MultipleLocator(0.5))
@@ -158,7 +158,7 @@ def plotting(data, res, output):
     plt.tight_layout()
     plt.show()
 
-    fig.savefig(output.joinpath("vege_sd_correlation.png"), dpi=300,
+    fig.savefig(output.joinpath("vege_sd_correlation_%s.png" % site), dpi=300,
                 bbox_inches="tight")
 
 
@@ -212,7 +212,7 @@ def main(site, resolutions, vege_folder, snow_folder, output_fig):
                                     "rmse": rmse(snow_cm, vege_cm),
                                     }
     # Plot figure
-    plotting(corr_data, resolutions, output_fig)
+    plotting(corr_data, resolutions, output_fig, site)
 
     return corr_data
 
@@ -220,7 +220,7 @@ def main(site, resolutions, vege_folder, snow_folder, output_fig):
 if __name__ == '__main__':
 
     # Specify site
-    site = "Nord"
+    site = "Sud"
 
     # Specify three resolutions in cm
     sizes = [99, 999, 2001]
