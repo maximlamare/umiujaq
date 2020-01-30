@@ -93,6 +93,7 @@ def plot_scatter(tpi_north, sd_north, stat_vals_north,
     ax2.text(0.02, 0.02, "b)", transform=ax2.transAxes)
 
     # Axes
+    plt.gcf().canvas.draw()
     for ax in [ax1, ax2]:
         ax.set_ylim(0, 3)
         ax.set_xlim(-1.5, 1.5)
@@ -106,8 +107,12 @@ def plot_scatter(tpi_north, sd_north, stat_vals_north,
                        right=True, left=True,
                        bottom=True, labelsize=8)
 
+    ax1.set_xticklabels([])
     ax3.set_xticklabels([])
     ax3.set_yticklabels([])
+
+    # Remove overlapping labels
+    plt.setp(ax2.get_ymajorticklabels()[-2:-1], visible=False)
 
     # Colorbar
     cbar = fig.colorbar(hex1, cax=ax3, orientation='vertical')
