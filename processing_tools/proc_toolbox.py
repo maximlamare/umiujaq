@@ -8,6 +8,7 @@ M. Lamare, M. Dumont, G. Picard (IGE, CEN).
 """
 from osgeo import gdal
 import numpy as np
+from scipy import stats
 
 
 def open_large_raster(inpath):
@@ -207,3 +208,20 @@ def unblockshaped(arr, h, w):
 def rmse(predictions, targets):
     """Calculate RMSE."""
     return np.sqrt(((predictions - targets) ** 2).mean())
+
+
+def calculate_stats(tpi, sd):
+    """Calculate statistics."""
+    # Compute linear regression
+    slope, intercept, r_value, p_value, std_err = stats.linregress(tpi, sd)
+    rmse_val = rmse(sd, tpi)
+    bias = np.average(np.array(sd) - np.array(tpi))
+
+    # Fill dictionnary
+    statdic = {"slope": slope,
+               "intercept": intercept,
+               "r2": r_value ** 2,
+               "rmse": rmse_val,
+               "bias": bias}
+
+    return statdic
