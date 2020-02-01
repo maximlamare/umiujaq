@@ -18,11 +18,11 @@ from proc_toolbox import (open_large_raster, rmse)
 def plotting(data, res, output, site):
     """Plot function for large datasets."""
     # Create figure
-    fig = plt.figure(figsize=(7, 2.21), dpi=300,)
+    fig = plt.figure(figsize=(7, 2.29), dpi=300,)
 
     # Create gridspec setting for subplots
     outer_grid = gs.GridSpec(1, 2, wspace=0.05,
-                             width_ratios=(1, 0.05))
+                             width_ratios=(1, 0.02))
     left_cell = outer_grid[0, 0]
     left_inner_grid = gs.GridSpecFromSubplotSpec(1, 3, left_cell, wspace=0,
                                                  width_ratios=(1, 1, 1))
@@ -61,7 +61,7 @@ def plotting(data, res, output, site):
              fontsize=7,
              ha='right'
              )
-    ax1.set_title("1 m")
+    ax1.set_title("1 m", fontsize=10)
 
     # Plot second panel
     ax2.hexbin(data["%s_cm" % res[1]]["vegetation"],
@@ -90,7 +90,7 @@ def plotting(data, res, output, site):
              fontsize=7,
              ha='right'
              )
-    ax2.set_title("10 m")
+    ax2.set_title("10 m", fontsize=10)
     # Plot  panel
     ax3.hexbin(data["%s_cm" % res[2]]["vegetation"],
                data["%s_cm" % res[2]]["snow"],
@@ -118,11 +118,12 @@ def plotting(data, res, output, site):
              fontsize=7,
              ha='right'
              )
-    ax3.set_title("20 m")
+    ax3.set_title("20 m", fontsize=10)
 
     # Colorbar
     cbar = fig.colorbar(hex1, cax=ax4, orientation='vertical')
-    cbar.set_label('Number of points / cell')
+    cbar.ax.tick_params(labelsize=7) 
+    cbar.set_label('Number of points / cell', fontsize=7)
 
     # Axis settings
     plt.gcf().canvas.draw()
@@ -153,7 +154,7 @@ def plotting(data, res, output, site):
     ax2.set_xlabel("Vegetation height / m")
 
     # Overall title
-    fig.suptitle("Pixel resolution", fontsize=14, x=0.5, y=1.1)
+    fig.suptitle("Pixel resolution", fontsize=10, x=0.5, y=1.05)
 
     plt.tight_layout()
     plt.show()
